@@ -83,10 +83,9 @@ void draw() {
   }
   
   
-  
+  ArrayList<PVector> passer = alllist.get(0);
   int counter = 0; // Creates a counter to see which group of city the program is on
   for (int i = 0; i < alllist.size(); i++){
-    ArrayList<PVector> passer = alllist.get(i);
     // Takes out one of the groups to draw the vertices and calculate distance
     if (counter == 0){
       for (int k = 0; k < passer.size() - 1; k++){ 
@@ -106,11 +105,13 @@ void draw() {
         vertex(holder.get(2).x, holder.get(2).y);
         // Assigns the vertex accordingly
         totaldistance += dist(passer.get(2).x, passer.get(2).y, holder.get(2).x, holder.get(2).y);
+        passer = holder;
       }else{
         // Figure out which header to tail combination is the shortest
         vertex(holder1.get(2).x, holder1.get(2).y);
         // Assigns vertex accordingly
         totaldistance += dist(passer.get(2).x, passer.get(2).y, holder1.get(2).x, holder1.get(2).y);
+        passer = holder1;
       }
       counter += 1;
     } 
@@ -120,7 +121,7 @@ void draw() {
         totaldistance += dist(passer.get(k).x, passer.get(k).y, passer.get(k - 1).x, passer.get(k - 1).y);
         // Calculates distance
       }
-      for (int j = 2; j > 0; j--){ 
+      for (int j = 0; j < 3; j++){ 
         vertex(passer.get(j).x, passer.get(j).y);
         // Assigns vertices to the cities in the group
       }
@@ -129,13 +130,14 @@ void draw() {
       // Connects its header to the tail of the last group remaining
       totaldistance += dist(passer.get(2).x, passer.get(2).y, holder.get(2).x, holder.get(2).y);
       counter += 1;
+      passer = holder;
     } 
     if (counter == 2){
       // Moves onto the last group
       for (int k = 2; k > 0; k--){ 
         totaldistance += dist(passer.get(k).x, passer.get(k).y, passer.get(k-1).x, passer.get(k-1).y);
       }
-      for (int j = 2; j > 0; j--){ 
+      for (int j = 0; j < 3; j++){ 
         vertex(passer.get(j).x, passer.get(j).y);
         // Draws the vertices for the last group in the array list
       }
